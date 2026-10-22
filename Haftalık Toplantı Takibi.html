@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script><title>Haftalık Toplantı Takibi</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f6f7f9;--card:#fff;--tx:#1c2430;--mu:#6b7686;--bd:#dde1e8;--ac:#2f5bea;
+--s1:#e8eefc;--s1t:#2a4bb8;--s2:#fff3d9;--s2t:#8a5a00;--s3:#dff5e6;--s3t:#1d7a42}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#14171c;--card:#1d2128;--tx:#e8ebf0;--mu:#97a1b0;--bd:#323944;--ac:#6f8fff;--s1:#22305a;--s1t:#a9bdff;--s2:#4a3a14;--s2t:#ffd98a;--s3:#1b3d2a;--s3t:#8be0ab}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#14171c;--card:#1d2128;--tx:#e8ebf0;--mu:#97a1b0;--bd:#323944;--ac:#6f8fff;--s1:#22305a;--s1t:#a9bdff;--s2:#4a3a14;--s2t:#ffd98a;--s3:#1b3d2a;--s3t:#8be0ab}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--bd);background:var(--card)}
+h1{font-size:18px;margin:0}
+nav{display:flex;gap:6px}
+nav button,.btn{border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:7px 14px;border-radius:8px;cursor:pointer;font:inherit}
+nav button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+main{max-width:1200px;margin:0 auto;padding:20px}
+.meta{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:16px}
+input,select,textarea{font:inherit;color:var(--tx);background:var(--card);border:1px solid var(--bd);border-radius:8px;padding:7px 10px;min-width:0}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:820px){.cols{grid-template-columns:1fr}}
+.col>h2{font-size:15px;margin:0 0 10px;color:var(--mu);text-transform:uppercase;letter-spacing:.04em}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:12px}
+.topic{display:flex;gap:8px;margin-bottom:8px}
+.topic input{flex:1;font-weight:600}
+.row{display:flex;gap:8px;align-items:center;margin-bottom:6px}
+.row input.t{flex:1}
+.row.dec{flex-wrap:wrap}
+.row.dec input.t{flex:1 1 220px}
+.x{border:none;background:none;color:var(--mu);cursor:pointer;font-size:18px;padding:0 6px}
+.add{border:1px dashed var(--bd);background:none;color:var(--ac);padding:6px 10px;border-radius:8px;cursor:pointer;font:inherit}
+select.st{font-weight:600;border:none;padding:6px 8px}
+.st-0{background:var(--s1);color:var(--s1t)}.st-1{background:var(--s2);color:var(--s2t)}.st-2{background:var(--s3);color:var(--s3t)}
+.sum{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:14px 0}
+@media(max-width:600px){.sum{grid-template-columns:repeat(2,1fr)}}
+.sum div{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:12px}
+.sum b{display:block;font-size:24px}
+.sum span{color:var(--mu);font-size:13px}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--bd);vertical-align:top}
+th{color:var(--mu);font-size:12px;text-transform:uppercase}
+.tw{overflow-x:auto}
+.pill{padding:3px 10px;border-radius:99px;font-size:13px;font-weight:600;white-space:nowrap}
+.empty{color:var(--mu);padding:12px 0}
+.paper{--bg:#fff;--card:#fff;--tx:#1c2430;--mu:#6b7686;--bd:#dde1e8;--s1:#e8eefc;--s1t:#2a4bb8;--s2:#fff3d9;--s2t:#8a5a00;--s3:#dff5e6;--s3t:#1d7a42;background:#fff;color:#1c2430;padding:24px;border-radius:12px;border:1px solid var(--bd)}.paper .card,.paper .sum div{background:#fff}.go{border:none;background:none;color:var(--ac);cursor:pointer;font:inherit;font-size:13px;white-space:nowrap}.tag{font-size:12px;color:var(--mu)}.bar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Haftalık Toplantı Takibi</h1>
+  <nav><button id="n0" class="on">Toplantı</button><button id="n1">Takip</button><button id="n2">Rapor</button></nav>
+</header>
+<main>
+  <section id="v0">
+    <div class="meta">
+      <select id="wk"></select><button class="btn" id="newWeek">+ Yeni hafta</button>
+      <input id="title" placeholder="Toplantı adı" style="flex:1 1 180px">
+      <input id="date" type="date">
+      <input id="people" placeholder="Katılımcılar" style="flex:1 1 180px">
+    </div>
+    <div class="cols">
+      <div class="col"><h2>Gündem</h2><div id="agenda"></div><button class="add" id="addTopic">+ Konu başlığı ekle</button></div>
+      <div class="col"><h2>Alınan kararlar</h2><div id="dec"></div><button class="add" id="addDec">+ Karar ekle</button>
+        <h2 style="margin-top:22px">Önceki haftalardan açık kararlar</h2><div id="carry"></div></div>
+    </div>
+  </section>
+  <section id="v1" hidden>
+    <div class="bar"><b>Tüm haftalar</b><select id="flt"><option value="o">Açık olanlar</option><option value="a">Hepsi</option><option value="0">Planlandı</option><option value="1">Devam ediyor</option><option value="2">Tamamlandı</option></select></div>
+    <div class="card tw" id="track"></div>
+  </section>
+  <section id="v2" hidden>
+    <div class="bar"><button class="btn" id="pdf">PDF olarak indir</button><span class="tag" id="pmsg"></span></div>
+    <div class="paper" id="rep"></div>
+  </section>
+</main>
+<script>
+const ST=["Planlandı","Devam ediyor","Tamamlandı"];
+const uid=()=>Math.random().toString(36).slice(2,9);
+const nw=(date,title)=>({id:uid(),title:title||"Haftalık Toplantı",date,people:"",topics:[{id:uid(),name:"",items:[{id:uid(),text:"",st:0}]}],decs:[]});
+let D={cur:"",weeks:[]},tabN=0,flt="o";
+try{const r=localStorage.getItem("toplanti-v2");if(r)D=JSON.parse(r);else{
+  const o=localStorage.getItem("toplanti-v1");if(o){const v=JSON.parse(o);D.weeks=[{id:uid(),title:v.title,date:v.date,people:v.people,topics:v.topics,decs:v.decs}]}}}catch(e){}
+if(!D.weeks.length)D.weeks=[nw(new Date().toISOString().slice(0,10))];
+if(!D.weeks.find(w=>w.id==D.cur))D.cur=D.weeks[D.weeks.length-1].id;
+const save=()=>{try{localStorage.setItem("toplanti-v2",JSON.stringify(D))}catch(e){}};
+const W=()=>D.weeks.find(w=>w.id==D.cur);
+const sorted=()=>[...D.weeks].sort((a,b)=>a.date<b.date?-1:1);
+const allDecs=()=>sorted().flatMap(w=>w.decs.map(d=>({d,w})));
+const findDec=id=>allDecs().find(x=>x.d.id==id)?.d;
+const carry=()=>allDecs().filter(x=>x.w.id!=D.cur&&x.w.date<=W().date&&x.d.st!=2);
+const esc=s=>String(s??"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fd=v=>v?new Date(v).toLocaleDateString("tr-TR"):"—";
+const sel=(st,id,k)=>`<select class="st st-${st}" data-k="${k}" data-id="${id}">${ST.map((n,i)=>`<option value="${i}"${i==st?" selected":""}>${n}</option>`).join("")}</select>`;
+const findI=id=>{for(const t of W().topics){const i=t.items.find(x=>x.id==id);if(i)return i}};
+const $=id=>document.getElementById(id);
+
+function render(){
+  const w=W();
+  $("wk").innerHTML=sorted().map(x=>`<option value="${x.id}"${x.id==D.cur?" selected":""}>${fd(x.date)} · ${esc(x.title)}</option>`).join("");
+  $("title").value=w.title;$("date").value=w.date;$("people").value=w.people;
+  $("agenda").innerHTML=w.topics.map(t=>`<div class="card">
+    <div class="topic"><input data-k="tn" data-id="${t.id}" placeholder="Konu başlığı" value="${esc(t.name)}"><button class="x" data-del="t" data-id="${t.id}" title="Başlığı sil">×</button></div>
+    ${t.items.map(i=>`<div class="row"><input class="t" data-k="it" data-id="${i.id}" placeholder="Gündem maddesi" value="${esc(i.text)}">${sel(i.st,i.id,"is")}<button class="go" data-todec="${i.id}" title="Karara dönüştür">→ Karar</button><button class="x" data-del="i" data-id="${i.id}">×</button></div>`).join("")}
+    <button class="add" data-addi="${t.id}">+ Madde</button></div>`).join("");
+  $("dec").innerHTML=w.decs.length?w.decs.map(d=>`<div class="card">
+    ${d.topic?`<div class="tag">Konu: ${esc(d.topic)}</div>`:""}
+    <div class="row dec"><input class="t" data-k="dt" data-id="${d.id}" placeholder="Karar" value="${esc(d.text)}">${sel(d.st,d.id,"ds")}<button class="x" data-del="d" data-id="${d.id}">×</button></div>
+    <div class="row"><input data-k="do" data-id="${d.id}" placeholder="Sorumlu" value="${esc(d.owner)}" style="flex:1"><input type="date" data-k="dd" data-id="${d.id}" value="${esc(d.due)}"></div></div>`).join(""):'<div class="empty">Henüz karar eklenmedi.</div>';
+  const c=carry();
+  $("carry").innerHTML=c.length?c.map(({d,w:ow})=>`<div class="card"><div class="tag">${fd(ow.date)} haftası</div><div class="row dec"><span style="flex:1 1 200px">${esc(d.text)||"—"}</span>${sel(d.st,d.id,"ds")}</div><div class="tag">Sorumlu: ${esc(d.owner)||"—"} · Termin: ${fd(d.due)}</div></div>`).join(""):'<div class="empty">Açık kalan karar yok.</div>';
+}
+function track(){
+  const l=allDecs().filter(({d})=>flt=="a"||(flt=="o"?d.st!=2:d.st==+flt));
+  $("flt").value=flt;
+  $("track").innerHTML=l.length?`<table><tr><th>Hafta</th><th>Karar</th><th>Sorumlu</th><th>Termin</th><th>Durum</th></tr>${l.map(({d,w})=>`<tr><td>${fd(w.date)}</td><td>${esc(d.text)||"—"}</td><td>${esc(d.owner)||"—"}</td><td>${fd(d.due)}</td><td>${sel(d.st,d.id,"ds")}</td></tr>`).join("")}</table>`:'<div class="empty">Kayıt yok.</div>';
+}
+const tbl=l=>l.length?`<table><tr><th>#</th><th>Karar</th><th>Sorumlu</th><th>Termin</th><th>Durum</th></tr>${l.map((d,i)=>`<tr><td>${i+1}</td><td>${esc(d.text)||"—"}</td><td>${esc(d.owner)||"—"}</td><td>${fd(d.due)}</td><td><span class="pill st-${d.st}">${ST[d.st]}</span></td></tr>`).join("")}</table>`:'<div class="empty">Kayıt yok.</div>';
+function report(){
+  const w=W(),n=[0,1,2].map(s=>w.decs.filter(d=>d.st==s).length),c=carry();
+  $("rep").innerHTML=`<h2 style="margin:0">${esc(w.title)} — Karar Raporu</h2>
+  <div style="color:var(--mu)">Tarih: ${fd(w.date)}${w.people?" · Katılımcılar: "+esc(w.people):""}</div>
+  <div class="sum"><div><b>${w.decs.length}</b><span>Bu haftaki karar</span></div>${ST.map((s,i)=>`<div><b>${n[i]}</b><span>${s}</span></div>`).join("")}</div>
+  <h3>Bu haftanın kararları</h3>${tbl(w.decs)}
+  <h3>Önceki haftalardan açık kararlar (${c.length})</h3>${tbl(c.map(x=>x.d))}
+  <h3>Gündem özeti</h3>${w.topics.map(t=>`<div class="card"><b>${esc(t.name)||"Başlıksız konu"}</b>${t.items.map(i=>`<div class="row" style="margin-top:6px"><span style="flex:1">${esc(i.text)||"—"}</span><span class="pill st-${i.st}">${ST[i.st]}</span></div>`).join("")}</div>`).join("")}`;
+}
+function show(){render();if(tabN==1)track();if(tabN==2)report()}
+function tab(n){tabN=n;[0,1,2].forEach(i=>{$("v"+i).hidden=i!=n;$("n"+i).className=i==n?"on":""});show()}
+[0,1,2].forEach(i=>$("n"+i).onclick=()=>tab(i));
+
+document.addEventListener("input",e=>{
+  const el=e.target,k=el.dataset.k,id=el.dataset.id,w=W();
+  if(["title","date","people"].includes(el.id)){w[el.id]=el.value;save();return}
+  if(!k)return;
+  if(k=="tn")w.topics.find(t=>t.id==id).name=el.value;
+  if(k=="it")findI(id).text=el.value;
+  const d=w.decs.find(x=>x.id==id);
+  if(k=="dt")d.text=el.value;if(k=="do")d.owner=el.value;if(k=="dd")d.due=el.value;
+  save();
+});
+document.addEventListener("change",e=>{
+  const el=e.target,k=el.dataset.k,id=el.dataset.id;
+  if(el.id=="wk"){D.cur=el.value;save();show();return}
+  if(el.id=="flt"){flt=el.value;track();return}
+  if(el.id=="date"){save();render();return}
+  if(k=="is")findI(id).st=+el.value;
+  if(k=="ds")findDec(id).st=+el.value;
+  if(k=="is"||k=="ds"){save();show()}
+});
+document.addEventListener("click",e=>{
+  const el=e.target,w=W();
+  if(el.id=="addTopic")w.topics.push({id:uid(),name:"",items:[{id:uid(),text:"",st:0}]});
+  else if(el.id=="addDec")w.decs.push({id:uid(),text:"",owner:"",due:"",st:0});
+  else if(el.id=="newWeek"){const l=sorted().pop(),dt=new Date(l.date);dt.setDate(dt.getDate()+7);const x=nw(dt.toISOString().slice(0,10),l.title);x.people=l.people;D.weeks.push(x);D.cur=x.id}
+  else if(el.dataset.addi)w.topics.find(t=>t.id==el.dataset.addi).items.push({id:uid(),text:"",st:0});
+  else if(el.dataset.todec){const i=findI(el.dataset.todec),t=w.topics.find(t=>t.items.includes(i));w.decs.push({id:uid(),text:i.text,owner:"",due:"",st:0,topic:t.name})}
+  else if(el.dataset.del){
+    const id=el.dataset.id,k=el.dataset.del;
+    if(k=="t")w.topics=w.topics.filter(t=>t.id!=id);
+    if(k=="i")w.topics.forEach(t=>t.items=t.items.filter(i=>i.id!=id));
+    if(k=="d")w.decs=w.decs.filter(d=>d.id!=id);
+  }else if(el.id=="pdf"){return exportPdf()}
+  else return;
+  save();show();
+});
+async function exportPdf(){
+  const m=$("pmsg");
+  try{
+    const dl=window.claude?await claude.use("downloads"):null;
+    if(!dl){m.textContent="İndirme bu ortamda kullanılamıyor.";return}
+    m.textContent="PDF hazırlanıyor…";
+    const blob=await html2pdf().set({margin:10,html2canvas:{scale:2,backgroundColor:"#ffffff"},jsPDF:{unit:"mm",format:"a4"}}).from($("rep")).outputPdf("blob");
+    await dl.save({filename:"karar-raporu-"+W().date+".pdf",data:blob});
+    m.textContent="PDF kaydedildi.";
+  }catch(err){m.textContent=err&&err.code=="declined"?"İndirme iptal edildi.":"PDF oluşturulamadı."}
+}
+show();
+</script>
+</body>
+</html>
